@@ -1,0 +1,61 @@
+{
+	"menu": {
+		"menuItem": {
+			"price": "Price",
+			"promotion": "Promotions",
+			"assortment": "Assortment",
+			"products": "Products",
+			"stores": "Stores",
+			"media": "Media",
+			"sales": "Sales",
+			"view": "Viewability",
+			"rating": "Ratings & reviews",
+			"report": "Reports",
+			"alert": "Alerts"
+		},
+		"separator": {
+			"positionnement": "POSITIONING",
+			"performance": "PERFORMANCE",
+			"custom": "CUSTOMIZATION"
+		},
+		"search": {
+			"placeholder": "Name, brand, EAN/UPC, URL"
+		},
+		"profile": {
+			"profile": "Profile",
+			"logout": "Logout"
+		}
+	},
+	"buttons": {
+		"close": "Close",
+		"cancel": "Cancel",
+		"validate": "Validate",
+		"save": "Save",
+		"update": "Update",
+		"search": "Search",
+        "all": "all"
+	},
+	"header": {
+		"calendar": {
+            "compare": "compare to:",
+            "day": "d"
+        }
+	},
+    "subheader": {
+        "extrafilters": {
+            "title": "More filters"
+        }
+    },
+    "profile": {
+        "name": "Name",
+        "email": "Email",
+        "pwd": "Password",
+        "locale": "Language",
+        "newPwd": "New password:",
+        "newPwdConfirmation": "Enter the new password again:"
+    },
+    "loader": {
+        "wait": "Long loading time for this composant ...",
+        "error": "Oops something happened"
+    }
+}

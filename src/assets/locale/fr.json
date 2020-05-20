@@ -1,0 +1,61 @@
+{
+	"menu": {
+		"menuItem": {
+			"price": "Prix",
+			"promotion": "Promotions",
+			"assortment": "Assortiments",
+			"products": "Produits",
+			"stores": "Magasins",
+			"media": "Media",
+			"sales": "Ventes",
+			"view": "Visibilité",
+			"rating": "Notes & Avis",
+			"report": "Reportings",
+			"alert": "Alertes"
+		},
+		"separator": {
+			"positionnement": "POSITIONNEMENT",
+			"performance": "PERFORMANCE",
+			"custom": "PERSONNALISATION"
+		},
+		"search": {
+			"placeholder": "Label, marque, EAN/UPC, URL"
+		},
+		"profile": {
+			"profile": "Profil",
+			"logout": "Se déconnecter"
+		}
+	},
+	"buttons": {
+		"close": "Fermer",
+		"cancel": "Annuler",
+		"validate": "Appliquer",
+		"save": "Enregistrer",
+		"update": "Modifier",
+		"search": "Chercher",
+        "all": "tous"
+	},
+	"header": {
+		"calendar": {
+            "compare": "comparer à :",
+            "day": "j"
+        }
+	},
+    "subheader": {
+        "extrafilters": {
+            "title": "Plus de filtres"
+        }
+    },
+    "profile": {
+        "name": "Nom",
+        "email": "Email",
+        "pwd": "Mot de passe",
+        "locale": "Langue",
+        "newPwd": "Nouveau mot de passe :",
+        "newPwdConfirmation": "Saisissez une seconde fois le nouveau mot de passe :"
+    },
+    "loader": {
+        "wait": "Temps de chargement long sur ce composant ...",
+        "error": "Oops un pb est survenu"
+    }
+}

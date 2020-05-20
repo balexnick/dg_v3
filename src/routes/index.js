@@ -12,7 +12,7 @@ const Routes = () => {
     <Router history={browserHistory}>
       <Switch>
         <ProtectedRoute path='/login' notauth component={Login} />
-        <ProtectedRoute path='/test' component={Test} />
+        <ProtectedRoute path='/media' component={Test} />
         <ProtectedRoute path='/' component={Homepage} />
       </Switch>
     </Router>

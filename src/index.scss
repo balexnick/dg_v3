@@ -16,6 +16,10 @@ body {
     height: 100%;
 }
 
+body{
+    background-color: #eee;
+}
+
 [type=reset],
 [type=submit],
 button,
@@ -30,6 +34,15 @@ h6 {
     font-weight: normal;
     color: rgb(83, 83, 83);
 }
+
+.custom-style-header{
+    background: #fff;
+}
+.datagram-img{
+    height: 42px;
+    margin-right: 20px;
+}
+  
 
 .sub-container {
     width: 100%;

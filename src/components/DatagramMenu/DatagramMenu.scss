@@ -1,0 +1,188 @@
+.route--active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.lightbar .dg-menu {top: 81px !important;}
+
+.dg-menu {
+    height: 100%;
+    width: 220px;
+    background-color: #ddd;
+    position: fixed;
+    z-index: 2;
+    left: 0px;
+    top: 56px;
+    padding-bottom: 165px;
+    display: flex;
+}
+
+.drawer-style > div {
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    background-color: rgb(221, 221, 221);
+    border: none;
+}
+
+.subheader-style {
+  line-height: 40px !important;
+  padding-left: 16px !important;
+}
+
+.dg-menu .menu-style {
+    color: rgb(117, 117, 117) !important;
+    height: 48px;
+    padding: 0;
+}
+
+.dg-menu .menu-style.sub {
+    font-size: 12px!important;
+    height: auto!important;
+    min-height: 0!important;
+    line-height: 14px!important;
+    white-space: normal!important;
+    margin: 0 !important;
+}
+
+.dg-menu .selected a {
+    background-color: #aaa;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.870588) !important;}
+.dg-menu .selected .style-icon {fill: rgba(0, 0, 0, 0.870588) !important;}
+.dg-menu .selected .freemium-badge {background-color: rgba(0, 0, 0, 0.870588) !important;}
+
+.dg-menu .grey {background-color: #ccc !important;}
+
+.badge-style {position: absolute !important;}
+.badge-style.rect span {border-radius: 4px !important; width: initial !important; padding: 5px; display: inline-block!important; white-space: nowrap;}
+
+.style-icon {
+    margin: 11px;
+}
+
+.alert-menu {
+    padding: 12px 12px 12px 10px;
+    margin-left: 0;
+    position: relative;
+    height: 48px;
+    line-height: 48px;
+    color: #757575;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.alert-menu svg {
+    display: block;
+    top: 0px;
+    margin: 8px 20px 12px 12px;
+    left: 0px;
+    fill: rgb(117, 117, 117) !important;
+    width: 1.3em;
+    height: 1.3em;
+}
+
+.dg-menu .menu-style.sub > a {
+    padding: 4px 16px 4px 51px !important;
+    width: 100%;
+}
+
+.search-input {
+    width: 190px !important;
+    height: 42px;
+    margin: 0 0 9px 5px!important;
+    padding: 5px !important;
+    background: white !important;
+    border-radius: 4px;
+    div::before {
+        border: none;
+    }
+    input {
+        font-size: 15px;
+    }
+    label {
+        font-size: 13px;
+        left: 5px;
+        color: #aaa;
+    }
+
+}
+
+.link-style.menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 48px;
+    width: 100%;
+    padding: 12px 12px 12px 10px;
+}
+
+.link-style.menu > svg {
+  margin-right: 20px !important;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.wrap-head-section {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    background-color: #172b4d;
+    .title-section {
+        position: absolute;
+        bottom: 10px;
+        left: 50px;
+        color: #FFF;
+        font-weight: bold;
+        font-size: 20px;
+    }
+}
+
+.wrap-table-section {
+    padding: 50px; 
+    width: 97vw;
+}
+
+.close-btn {
+    left: 15px;
+    top: 15px;
+    position: absolute;
+}
+
+.chip-profile {
+    img,
+    div {
+        height: 120px;
+        width: 120px;
+    }
+}
+
+.profile-setting-name {
+    font-weight: bold;
+    font-size: 12px;
+    color: #787878;
+}
+
+.profile-setting-value {font-size: 14px;}
+
+.profile-menuitem {
+    padding: 10px !important;
+    font-size: 14px !important;
+}
+
+.menu-icon {
+    display: flex;
+    margin: 0px !important;
+}
+
+.menu-selector {
+    margin: 0px;
+    padding: 0px !important;
+}
+
+.help-button {
+    position: absolute !important;
+    left: 8px;
+    bottom: 113px;
+}

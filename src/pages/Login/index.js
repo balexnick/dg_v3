@@ -7,12 +7,11 @@ import {connect} from 'react-redux'
 // import Loader from '../../../components/Loader'
 import './Login.scss'
 import datagram from 'assets/datagram.png'
-import {actions} from 'store'
+import { actions } from 'store'
 
 
-const Login = ({loginAction, isFetching}) => {
+const Login = ({loginAction, isFetching, error}) => {
   const [userInfo, setUserInfo] = useState({username: 'pascal@datagram.ai', password: 'Pscl%%17!!'})
-  const [error, setError] = useState(false);
 
   const submitLogin = () => {
     loginAction('/login', userInfo.username, userInfo.password)
@@ -20,18 +19,16 @@ const Login = ({loginAction, isFetching}) => {
 
   const handleChange = e => {
     setUserInfo({
-        ...userInfo,
-        [e.target.name]: e.target.value
+      ...userInfo,
+      [e.target.name]: e.target.value
     });
   }
 
   return (
     <div className='login-container'>
       <Toolbar className='custom-style-header'>
-        <div className='style-toolbar-group' style={{ marginLeft: '-12px' }}>
-          <a href='https://www.datagram.ai/'><img src={datagram} alt='datagram'/></a>
-          <h3>Datagram</h3>
-        </div>
+        <a href='https://www.datagram.ai/'><img src={datagram} className='datagram-img' alt='datagram'/></a>
+        <h3>Datagram</h3>
       </Toolbar>
       <Paper className='login-card'>
         <h2>Bienvenue sur Datagram</h2>
@@ -58,7 +55,7 @@ const Login = ({loginAction, isFetching}) => {
             className='login-input'
           />
         </div>
-        <Button variant='contained' color='primary' className='login-button'onClick={submitLogin} disabled={isFetching}  >
+        <Button variant='contained' color='primary' className='login-button'onClick={submitLogin} disabled={isFetching} >
           Connexion
         </Button>
           {/* {this.props.isFetching ? <Loader
@@ -75,23 +72,13 @@ const Login = ({loginAction, isFetching}) => {
 }
 
 const mapStateToProps = store => ({
-  isFetching: store.auth.fetching
+  isFetching: store.auth.fetching,
+  error: store.auth.error,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: (requestId, username, password) => dispatch(actions.auth.loginAction(requestId, username, password))
+  loginAction: (requestId, username, password) => dispatch(actions.auth.loginAction(requestId, username, password)),
 })
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
-
-  // componentWillReceiveProps (nextProps) {
-  //   if ((nextProps.isFetching !== this.props.isFetching) && this.props.isFetching && nextProps.error) {
-  //     this.setState({ error: true })
-  //   } else if ((nextProps.isFetching !== this.props.isFetching) && this.props.isFetching && !nextProps.error) {
-  //     this.setState({ error: false })
-  //   }
-  // }
-
-  
-

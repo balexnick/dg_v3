@@ -1,13 +1,18 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import Layout from 'components/common/Layout'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const {notauth, token} = rest
 
   const isAuth = component => {
     if (!token) return <Redirect to="/login" />;
-    return component
+    return (
+      <Layout>
+        {component}
+      </Layout>
+    )
   };
 
   const notAuth = component => {
@@ -21,8 +26,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   );
 }
 
-const mapStateToProps = state => ({
-  token: state.auth.token,
+const mapStateToProps = store => ({
+  token: store.auth.token,
 });
 
 export default connect(mapStateToProps)(ProtectedRoute);
