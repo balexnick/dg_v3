@@ -17,6 +17,9 @@
     display: flex;
 }
 
+.drawer-style{
+    width: 100%;
+}
 .drawer-style > div {
     height: 100%;
     position: relative;
@@ -28,6 +31,7 @@
 .subheader-style {
   line-height: 40px !important;
   padding-left: 16px !important;
+  background: #ddd!important;
 }
 
 .dg-menu .menu-style {

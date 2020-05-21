@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Layout from 'components/common/Layout'
+import Layout from 'layout'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const {notauth, token} = rest

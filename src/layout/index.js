@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from "react-router-dom";
-import Header from 'components/Header'
-import DatagramMenu from 'components/DatagramMenu'
+import { withRouter } from 'react-router-dom';
+import Header from 'components/common/Header'
+import DatagramMenu from 'components/common/DatagramMenu'
 import { actions } from 'store'
+import {getTranslates} from 'utils/getTranslate'
+
+import './layout.scss'
 
 const Layout = (props) => {
-  const {children, getProfileAction, location: { pathname } } = props
+  const {children, getProfileAction, location: { pathname }, profile} = props
   const [title, setTitle] = useState('')
 
-  const title_obj = {
+  const TITLE_OBJ = {
     assortment: 'Assortiments',
     report: 'Reportings',
     price: 'Prix',
@@ -25,15 +28,17 @@ const Layout = (props) => {
     gallerie: 'Modules Analytics',
     pim: 'PIM',
   }
+  
+  const TRAMSLATES = getTranslates(profile.locale);
 
   useEffect(() => {
     if(pathname === '/') setTitle('Dashboard')
-    Object.keys(title_obj).forEach(item => {
+    Object.keys(TITLE_OBJ).forEach(item => {
       if(pathname.includes(item)){
-        setTitle(title_obj[item])
+        setTitle(TITLE_OBJ[item])
       }
     })
-  },[title_obj, pathname])
+  },[TITLE_OBJ, pathname])
   
   useEffect(() => {
     getProfileAction()
@@ -42,16 +47,20 @@ const Layout = (props) => {
   return (
     <div>
       <Header title={title}/>
-      <DatagramMenu/>
-      {children}
+      <DatagramMenu menu={TRAMSLATES.menu} profile={profile}/>
+      <div className='core-layout__viewport'>
+        {children}
+      </div>
     </div>
   )
 }
 
-const mapStateToProps = store => ({})
+const mapStateToProps = store => ({
+  profile: store.app.profile
+})
 
 const mapDispatchToProps = dispatch => ({
-  getProfileAction: () => dispatch(actions.profile.getProfileAction())
+  getProfileAction: () => dispatch(actions.app.getProfileAction())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))
