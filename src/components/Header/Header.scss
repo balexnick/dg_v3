@@ -1,0 +1,137 @@
+.route--active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.lightbar .custom-style-header {top: 25px !important;}
+
+.custom-style-header {
+    height: 56px !important;
+    min-height: 56px !important;
+    // position: fixed !important;
+    z-index: 2 !important;
+    left: 0px !important;
+    top: 0px !important;
+    width: 100%;
+    background: #FFF !important;
+    border-bottom: 1px solid #e8e8e8;
+    justify-content: space-between;
+}
+
+.header-badge2-style {
+    top: -15px;
+    span {
+      background-color: #aaa;
+      color: #fff;
+    }
+}
+
+.style-toolbar-group {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.custom-style-header .img {
+    display: block;
+    height: 42px;
+    margin-left: 15px;
+}
+
+.custom-style-date input {font-size: 14px !important;}
+
+.range-calendar {
+    position: relative;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    height: 28px;
+    &.comparator {
+      top: 10px;
+      margin-left: 10px;
+      .calendar-icon-button p,
+      .calendar-icon-button svg {color: #999;}
+      .header-badge-style span {background-color: #999;}
+    }
+}
+
+.range-calendar:hover {
+    background-color: #dedede;
+}
+
+.rdrDateRangePickerWrapper {height: auto;}
+
+.rdrInputRange:nth-child(2) {display: none;}
+
+.header-badge-style {
+  float: left;
+  position: relative;
+  span {
+    width: initial;
+    height: 16px;
+    padding: 0 3px;
+    border-radius: 6px;
+    background-color: #787878;
+    font-size: 10px;
+    font-weight: bold;
+    color: #FFF;
+  }
+}
+
+.calendar-icon-button {
+  padding: 1px;
+  border: none;
+  border-radius: 4px;
+  background-color: initial;
+}
+
+.calendar-icon-button:hover {
+  cursor: pointer;
+}
+
+.calendar-icon-button:focus {
+  outline: none;
+  background-color: #eee;
+}
+
+.calendar-icon-button svg {
+    float: left;
+    position: relative;
+    color: #535353;
+}
+
+.calendar-icon-button p {
+    margin: 4px 6px;
+    font-size: 14px;
+    color: #535353;
+    white-space: nowrap;
+}
+
+.Cal__Header__date {
+  font-size: 24px;
+  padding-left: 10px;
+}
+
+#calendar-custom-footer {
+  background-color: #e8e8e8;
+  height: 44px;
+  padding: 6px 24px!important;
+  text-align: center;
+  position: relative;
+  float: left;
+}
+
+.lightbar-style {
+  top: 0;
+  position: fixed;
+  background-color: #FFC107;
+  width: 100%;
+  height: 25px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  z-index: 1000;
+  padding: 6px;
+}

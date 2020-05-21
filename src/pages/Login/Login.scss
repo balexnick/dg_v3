@@ -1,0 +1,63 @@
+.login-container {
+  background-color: #EEE;
+  height: 100vh;
+}
+
+.login-card {
+  position: relative;
+  width: 400px;
+  margin: 50px auto 0;
+  padding: 20px;
+  text-align: center;
+  > div {
+    position: relative;
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #464a4c;
+  background-color: #fff;
+  background-image: none;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+}
+
+.form-group {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+.control-label {
+  float: left;
+  padding: 10px 0;
+}
+
+.login-button {
+    width: 256px;
+    margin-top: 25px;
+}
+
+.login-button span {font-weight: bold !important;}
+
+.login-input {
+    width: 260px !important;
+    margin: 0 10px 10px 10px !important;
+    padding: 5px !important;
+}
+
+.MuiFormHelperText-root{
+  line-height: inherit!important;
+}
