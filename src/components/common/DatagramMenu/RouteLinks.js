@@ -4,7 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 
-const Separate = ({separator, menuItem, location: { pathname }, childItems, route, children}) => {
+const RouteLinks = ({separator, menuItems, location: { pathname }, childItems, route, children, open}) => {
   const renderChild = () => {
     if(!childItems) return null
     return(
@@ -26,17 +26,25 @@ const Separate = ({separator, menuItem, location: { pathname }, childItems, rout
       </div>
     )
   }
+
   return (
     <div>
-      <ListSubheader className="subheader-style">
-        {separator && separator}
-      </ListSubheader>
       {
-        menuItem && Object.keys(menuItem).map((item, i) => {
+        open && (
+          <ListSubheader className="subheader-style" style={{ backgroundColor: "#ddd" }}>
+            {separator && separator}
+          </ListSubheader>
+        )
+      }
+      {
+        menuItems && Object.keys(menuItems).map((item, i) => {
           return (
-            <MenuItem key={i} className={`menu-style ${pathname === menuItem[item][1] && "selected"}`} >
-              <Link to={menuItem[item][1]} className="link-style menu">
-                {menuItem[item][0]}
+            <MenuItem 
+              key={i} 
+              disabled={!menuItems[item][2]}
+              className={`menu-style ${pathname === menuItems[item][1] && "selected"}`} >
+              <Link to={menuItems[item][1]} className="link-style menu">
+                {menuItems[item][0]}
                 {item}
               </Link>
             </MenuItem>
@@ -48,4 +56,4 @@ const Separate = ({separator, menuItem, location: { pathname }, childItems, rout
   )
 }
 
-export default withRouter(Separate)
+export default withRouter(RouteLinks)

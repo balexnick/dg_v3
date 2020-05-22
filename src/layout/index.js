@@ -9,7 +9,7 @@ import {getTranslates} from 'utils/getTranslate'
 import './layout.scss'
 
 const Layout = (props) => {
-  const {children, getProfileAction, location: { pathname }, profile} = props
+  const {children, getProfileAction, location: { pathname }, profile, menuOpened, toggleMenu} = props
   const [title, setTitle] = useState('')
 
   const TITLE_OBJ = {
@@ -19,7 +19,7 @@ const Layout = (props) => {
     promotion: 'Promotions',
     ean: 'EAN',
     product: 'Produits',
-    viewability: 'Visibilité',
+    view: 'Visibilité',
     media: 'Media',
     rating: 'Notes & Avis',
     geolocation: 'Magasins',
@@ -28,9 +28,11 @@ const Layout = (props) => {
     gallerie: 'Modules Analytics',
     pim: 'PIM',
   }
+  const TRANSLATES = getTranslates(profile.locale);
+  const PAGE = pathname.replace('/', '') === 'viewability' ? 'view' : pathname.replace('/', '')
+  const PAGENAME = TRANSLATES.menu.menuItem[PAGE] 
+  const HEADERTITLE = PAGENAME ? PAGENAME : title
   
-  const TRAMSLATES = getTranslates(profile.locale);
-
   useEffect(() => {
     if(pathname === '/') setTitle('Dashboard')
     Object.keys(TITLE_OBJ).forEach(item => {
@@ -38,17 +40,18 @@ const Layout = (props) => {
         setTitle(TITLE_OBJ[item])
       }
     })
-  },[TITLE_OBJ, pathname])
+  },[TITLE_OBJ, pathname, TRANSLATES])
   
   useEffect(() => {
     getProfileAction()
   },[getProfileAction])
-
+  
+ 
   return (
     <div>
-      <Header title={title}/>
-      <DatagramMenu menu={TRAMSLATES.menu} profile={profile}/>
-      <div className='core-layout__viewport'>
+      <Header title={HEADERTITLE}/>
+      <DatagramMenu menu={TRANSLATES.menu} profile={profile} open={menuOpened} toogleOpen={() => toggleMenu(!menuOpened)}/>
+      <div className='core-layout__viewport' style={{ paddingLeft: menuOpened ? 220 : 70 }}> 
         {children}
       </div>
     </div>
@@ -56,11 +59,13 @@ const Layout = (props) => {
 }
 
 const mapStateToProps = store => ({
-  profile: store.app.profile
+  profile: store.app.profile,
+  menuOpened: store.app.menuOpened
 })
 
 const mapDispatchToProps = dispatch => ({
-  getProfileAction: () => dispatch(actions.app.getProfileAction())
+  getProfileAction: () => dispatch(actions.app.getProfileAction()),
+  toggleMenu: (opened) => dispatch(actions.app.toggleMenu(opened))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))
