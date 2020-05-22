@@ -1,20 +1,21 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
-import * as auth from './auth/actions';
-import * as profile from './profile/actions'
 
+import * as app from './app/actions'
+import * as auth from './auth/actions';
+
+import appReducer from './app/reducers'
 import authReducer from './auth/reducers';
-import profileReducer from './profile/reducers'
 
 export const actions = {
-  auth,
-  profile
+  app,
+  auth
 };
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  profile: profileReducer
+  app: appReducer,
+  auth: authReducer
 });
 
 const middleware = [thunk];

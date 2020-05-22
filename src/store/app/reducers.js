@@ -5,6 +5,7 @@ const initialState = {
   profile: {},
   getProfileSuccess: false,
   getProfileFailure: false,
+  menuOpened: true
 }
 
 export default (state = initialState, action) => {
@@ -18,6 +19,9 @@ export default (state = initialState, action) => {
     }
     case constant.GET_PROFILE_FAILURE:{
       return ({ ...state, fetching: false, getProfileSuccess: false, getProfileFailure: true })
+    }
+    case constant.TOGGLE_MENU:{
+      return({ ...state, menuOpened: action.payload })
     }
     default:
       return state

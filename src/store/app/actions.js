@@ -11,3 +11,10 @@ export const getProfileAction = () => {
     .catch(err => dispatch({type: conatant.GET_PROFILE_FAILURE, error: err }))
   }
 }
+
+
+export const toggleMenu = (opened) => {
+  return (dispatch) => {
+    dispatch({type: conatant.TOGGLE_MENU, payload: opened})
+  }
+}
