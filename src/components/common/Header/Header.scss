@@ -15,9 +15,12 @@
     width: 100%;
     background: #FFF !important;
     border-bottom: 1px solid #e8e8e8;
-    justify-content: space-between;
+    // justify-content: space-between;
 }
 
+.sp-between{
+  justify-content: space-between;
+}
 .header-badge2-style {
     top: -15px;
     span {
@@ -52,7 +55,6 @@
       margin-left: 10px;
       .calendar-icon-button p,
       .calendar-icon-button svg {color: #999;}
-      .header-badge-style span {background-color: #999;}
     }
 }
 
@@ -64,7 +66,7 @@
 
 .rdrInputRange:nth-child(2) {display: none;}
 
-.header-badge-style {
+.header-badgex-style {
   float: left;
   position: relative;
   span {
@@ -72,7 +74,7 @@
     height: 16px;
     padding: 0 3px;
     border-radius: 6px;
-    background-color: #787878;
+    background-color: #787878!important;
     font-size: 10px;
     font-weight: bold;
     color: #FFF;

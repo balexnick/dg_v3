@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { store } from 'store'
+import { changeResponseCalendarRange } from 'store/app/actions';
+
 const CancelToken = axios.CancelToken;
 
 let OpenRequests = [];
@@ -60,6 +63,14 @@ const API = ({ url, data, method = 'GET', requestId, useToken = true }) => {
     }),
   })
   .then(res => {
+    const { ds, de } = res.data;
+    if (ds && de) {
+      store.dispatch(changeResponseCalendarRange({
+        start: ds,
+        end: de
+      }))
+    }
+
     return res.data;
   })
 }
