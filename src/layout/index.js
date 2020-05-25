@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import Header from 'components/common/Header'
 import DatagramMenu from 'components/common/DatagramMenu'
+import Subheader from 'components/common/Subheader';
 import { actions } from 'store'
 import {getTranslates} from 'utils/getTranslate'
 import './layout.scss'
@@ -73,6 +74,10 @@ const Layout = (props) => {
       />
       <DatagramMenu menu={TRANSLATES.menu} profile={profile} open={menuOpened} toogleOpen={() => toggleMenu(!menuOpened)}/>
       <div className='core-layout__viewport' style={{ paddingLeft: menuOpened ? 220 : 70 }}> 
+        <Subheader
+          translates={TRANSLATES}
+          {...props}
+        />
         {children}
       </div>
     </div>
@@ -92,6 +97,9 @@ const mapDispatchToProps = dispatch => ({
   toggleMenu: (opened) => dispatch(actions.app.toggleMenu(opened)),
   changeCalendarRange: (data) => dispatch(actions.app.changeCalendarRange(data)),
   changeCalendarRange2: (data) => dispatch(actions.app.changeCalendarRange2(data)),
+  selectFilter: (newSelectedFilter) => dispatch(actions.app.selectFilter(newSelectedFilter)),
+  setActiveTrees: (activeTrees) => dispatch(actions.app.activeTrees(activeTrees))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))
+

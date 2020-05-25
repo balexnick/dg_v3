@@ -155,6 +155,18 @@ export default (state = initialState, action) => {
         deletedFiltersIds: action.payload,
       })
     }
+
+    case constant.SELECT_FILTERS: {
+      return ({ ...state, selectedFilter: { ...action.payload, requestDate: state.selectedFilter.requestDate } })
+    }
+
+    case constant.SET_ACTIVE_TREES: {
+      return ({
+        ...state,
+        activeTrees: action.payload,
+      })
+    }
+    
     default:
       return state
   }

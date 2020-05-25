@@ -58,7 +58,19 @@ export const setDeletedFiltersIds = (deletedFiltersIds) => {
   }
 }
 
+export const selectFilter = (selectedFilter) => {
+  return {
+    type: constant.SELECT_FILTERS,
+    payload: selectedFilter
+  }
+}
 
+export const setActiveTrees = (activeTrees) => {
+  return {
+    type: constant.SET_ACTIVE_TREES,
+    payload: activeTrees,
+  }
+}
 
 // ------------------------------------
 // Specialized Action Creator

@@ -46,7 +46,6 @@ const Header = ({title, classes, translates, selectedFilter, profile, changeCale
             </span> : null
           }
         </div>
-          {console.log(!!profile.hide_calendar)}
           {!profile.hide_calendar ? 
             <RangeCalendar 
               profile={profile}
