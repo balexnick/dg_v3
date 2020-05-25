@@ -22,9 +22,10 @@
 .drawer-style > div {
     height: 100%;
     position: relative;
-    overflow-y: auto;
     background-color: rgb(221, 221, 221);
     border: none;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .subheader-style {
