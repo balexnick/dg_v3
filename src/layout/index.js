@@ -72,17 +72,21 @@ const Layout = (props) => {
         changeCalendarRange={changeCalendarRange}
         changeCalendarRange2={changeCalendarRange2}
       />
+      <Subheader
+        translates={TRANSLATES}
+        {...props}
+      />
       <DatagramMenu menu={TRANSLATES.menu} profile={profile} open={menuOpened} toogleOpen={() => toggleMenu(!menuOpened)}/>
+
       <div className='core-layout__viewport' style={{ paddingLeft: menuOpened ? 220 : 70 }}> 
-        <Subheader
-          translates={TRANSLATES}
-          {...props}
-        />
-        {children}
+        <div className='sub-container'>
+          {children}
+        </div>
       </div>
     </div>
   )
 }
+
 
 const mapStateToProps = store => ({
   profile: store.app.profile,
@@ -98,7 +102,7 @@ const mapDispatchToProps = dispatch => ({
   changeCalendarRange: (data) => dispatch(actions.app.changeCalendarRange(data)),
   changeCalendarRange2: (data) => dispatch(actions.app.changeCalendarRange2(data)),
   selectFilter: (newSelectedFilter) => dispatch(actions.app.selectFilter(newSelectedFilter)),
-  setActiveTrees: (activeTrees) => dispatch(actions.app.activeTrees(activeTrees))
+  setActiveTrees: (activeTrees) => dispatch(actions.app.setActiveTrees(activeTrees))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))

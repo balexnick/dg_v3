@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import RenderSubheaderElements from './SubheaderElements/RenderSubheaderElements'
-
+import { withRouter } from 'react-router-dom';
 import './Subheader.scss'
+
 const Subheader = (props) => {
   const {
     extraFilters, 
@@ -10,7 +11,8 @@ const Subheader = (props) => {
     translates, 
     activeTrees,
     selectFilter,
-    setActiveTrees
+    setActiveTrees,
+    menuOpened
   } = props
 
   const [checkedAllButton, setCheckedAllButton] = useState({})
@@ -82,7 +84,6 @@ const Subheader = (props) => {
         checkedAllButton["index_"+groupFilters.name] = false;
       }
     }
-
     selectFilter(newSelectedFilter);
     setActiveTrees(activeTrees);
     setFilterChanged(true)
@@ -90,8 +91,78 @@ const Subheader = (props) => {
     // this.forceUpdate()
   }
 
+  const selectExtraFilter = (verbose, filterName, item, type = 'checkbox') => {
+    const newSelectedFilter = JSON.parse(JSON.stringify(selectedFilter));
+    const addedNewFilter = {};
+    if(selectedFilter.extra.find(filter => filter.id === item.id.toString())) {
+      newSelectedFilter.extra = selectedFilter.extra.filter(filter => filter.id !== item.id + "");
+      checkedAllButton["index_"+filterName] = false;
+    } else {
+      switch(type) {
+        case "tree": {
+          addedNewFilter.id = item.id + "";
+          addedNewFilter.title = item.name;
+          addedNewFilter.key = filterName;
+          addedNewFilter.verbose = verbose;
+          break;
+        }
+        case "checkbox": {
+          addedNewFilter.id = item.id + "";
+          addedNewFilter.title = item.title;
+          addedNewFilter.key = filterName;
+          addedNewFilter.verbose = verbose;
+          break;
+        }
+        default: 
+          break;
+      }
+
+      newSelectedFilter.extra.push(addedNewFilter);
+
+      const currentFilter = extraFilters.find(elem => elem.name === filterName);
+      let groupFilterTotalLength = 0;
+      switch(currentFilter.type) {
+        case "tree": {
+          currentFilter.values.forEach(function f(filter) {
+            groupFilterTotalLength++;
+            if(filter.children && filter.children.length) {
+              filter.children.forEach(f);
+            }
+          })
+          break;
+        }
+        case "checkbox": {
+          groupFilterTotalLength = currentFilter.values.length;
+          break;
+        }
+        default: {
+          groupFilterTotalLength = currentFilter.values.length;
+        }
+      }
+
+      const checkedFiltersInCurrentGroup = newSelectedFilter.extra.filter(filter => filter.key === currentFilter.name);
+
+      if(checkedFiltersInCurrentGroup.length === groupFilterTotalLength) {
+        checkedAllButton["index_"+filterName] = true;
+      }
+
+    }
+    selectFilter(newSelectedFilter);
+
+    setCheckedAllButton(checkedAllButton)
+    setFilterChanged(true)
+  }
+
+  const submitFilter = () => {
+    let id = props.location.pathname.split('/').pop()
+    console.log('props', id)
+    // console.log(selectedFilter)
+    console.log('submit')
+  }
+
+  // console.log(props)
   return (
-    <div className='dg-subheader'>
+    <div className='dg-subheader' style={{ paddingLeft: menuOpened ? 220 : 70 }}>
       <RenderSubheaderElements 
         extraFilter={extraFilters}
         selectedFilter={selectedFilter}
@@ -99,10 +170,9 @@ const Subheader = (props) => {
         checkedAllButton={checkedAllButton}
         handleAllOptionClickMainMenuItems={handleAllOptionClickMainMenuItems}
         activeTrees={activeTrees}
-        // filterChanged={filterChanged}
-        // submitFilter={this.submitFilter}
-        // selectExtraFilter={this.selectExtraFilter}
-        // locale={locale}
+        selectExtraFilter={selectExtraFilter}
+        filterChanged={filterChanged}
+        submitFilter={submitFilter}
       />
     </div>
   )
@@ -114,4 +184,4 @@ const mapStateToProps = store => ({
   activeTrees: store.app.activeTrees,
 })
 
-export default connect(mapStateToProps, null)(Subheader)
+export default withRouter(connect(mapStateToProps, null)(Subheader))

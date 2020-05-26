@@ -18,7 +18,7 @@ class RenderMenuItems extends PureComponent {
     if (extraFilter.length) {
       extraFilter.forEach((value, key) => {
         mainMenuItems.push(
-          <div className='custom-expansion-panel' key={'cep_'+key}>
+          <div className='custom-expansion-panel' data-test='test' key={'cep_'+key}>
             <Button
               style={{ background: '#fff' }}
               aria-owns={anchorEl ? 'simple-menu' : null}
