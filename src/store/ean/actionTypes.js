@@ -1,0 +1,4 @@
+export const GET_EAN_REQUEST = 'GET_EAN_REQUEST'
+export const GET_EAN_SUCCESS = 'GET_EAN_SUCCESS'
+export const GET_EAN_FAILURE = 'GET_EAN_FAILURE'
+export const SHOW_EAN_LOADER = 'SHOW_EAN_LOADER'

@@ -34,7 +34,7 @@ const initialState = {
   menuOpened: true,
   filters: {},
   extraFilters: [],
-  data: [],
+  contextualFilterData: [],
   selectedFilter: getInitialSelectedFilters(),
   snackBarFilters: [],
   activeTrees: {},
@@ -42,6 +42,9 @@ const initialState = {
   error: null,
   loadingDefaultFilters: false,
   defaultFiltersSet: false,
+  requestID: null,
+  alertsModal: {},
+  pageTitleKey: null
 }
 
 export default (state = initialState, action) => {
@@ -99,7 +102,7 @@ export default (state = initialState, action) => {
     }
 
     case constant.CONTEXTUAL_FILTER_DATA: {
-      return ({ ...state, data: action.payload })
+      return ({ ...state, contextualFilterData: action.payload })
     }
 
     case constant.CHANGE_CALENDAR_RANGE: {
@@ -167,6 +170,38 @@ export default (state = initialState, action) => {
       })
     }
     
+    case constant.REQUEST_ID: {
+      return({
+        ...state,
+        requestID: action.payload
+      })
+    }
+
+    case constant.SET_NEW_ALERT_OPTIONS: {
+      const { data, type } = action.payload
+      const { alert_kpi = [], alert_cond = [], alert_freq = [], alert_options = [], export_route, export_component} = data
+      const newAlertData = {}
+      if (type) {
+        const alertFreqTrs = alert_freq.map((item) => { return { 'title' : item, 'name' : item } })
+        newAlertData[type] = {
+          alert_kpi: alert_kpi,
+          alert_cond: alert_cond,
+          alert_freq:alertFreqTrs,
+          alert_options: alert_options,
+          route: export_route,
+          component: export_component
+        }
+      }
+      return ({ ...state, alertsModal: { ...state.alertsModal, ...newAlertData } })
+    } 
+
+    case constant.SET_PAGE_TITLE_KEY: {
+      return ({
+        ...state,
+        pageTitleKey: action.payload,
+      })
+    }
+
     default:
       return state
   }

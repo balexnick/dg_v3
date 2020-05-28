@@ -1,6 +1,18 @@
 import * as constant from './actionTypes'
 import API from 'utils/API'
-
+import {getSubheaderProductData} from 'store/product/actions'
+import {getSubheaderEANData} from 'store/ean/actions'
+import {getSubheaderPriceData} from 'store/price/actions'
+import {getSubheaderPromotionData} from 'store/promotion/actions'
+import {getSubheaderAssortmentData} from 'store/assortment/actions'
+import {getSubheaderRatingData} from 'store/rating/actions'
+import {getSubheaderViewabilityData} from 'store/viewability/actions'
+import {getSubheaderGeolocationData} from 'store/geolocation/actions'
+import {getSubheaderReportData} from 'store/report/actions'
+import {getSubheaderMediaData} from 'store/media/actions'
+import {getSubheaderSaleData} from 'store/sales/actions'
+import {getSubheaderHomeData} from 'store/homepage/actions'
+import {getSubheaderGallerieData} from 'store/gallerie/actions'
 // ------------------------------------
 // Action
 // ------------------------------------
@@ -72,6 +84,41 @@ export const setActiveTrees = (activeTrees) => {
   }
 }
 
+export const getFiltersAndCategoriesFailure = (data) => {
+  return {
+    type  : constant.GET_FILTERS_AND_CATEGORIES_FAILURE,
+    error : data.error
+  }
+}
+
+export const changeCalendarRangeFromRoute = (date) =>{
+  return {
+    type    : constant.CHANGE_CALENDAR_RANGE_FROM_ROUTE,
+    payload : date
+  }
+}
+
+export const setRequestId = (data) => {
+  return {
+    type    : constant.REQUEST_ID,
+    payload : data
+  }
+}
+
+export const setNewAlertOptions = (alertData) => {
+  return {
+    type    : constant.SET_NEW_ALERT_OPTIONS,
+    payload : alertData
+  }
+}
+
+export const setPageTitleKey = data => {
+  return{
+    type    : constant.SET_PAGE_TITLE_KEY,
+    payload : data
+  }
+}
+
 // ------------------------------------
 // Specialized Action Creator
 // ------------------------------------
@@ -101,10 +148,9 @@ export const getFiltersAndCategoriesAction = () => {
       sessionStorage.setItem('all_filters', JSON.stringify(data));
       dispatch(getFiltersAndCategoriesSuccess(data))
     })
-    .catch(err => dispatch({type: constant.GET_FILTERS_AND_CATEGORIES_FAILURE, error: err}))
+    .catch(err => dispatch(getFiltersAndCategoriesFailure({ error: err })))
   }
 }
-
 
 export const getContextualFilterAction = () => {
   return (dispatch) => {
@@ -131,7 +177,7 @@ export const getContextualFilterAction = () => {
   }
 }
 
-export function setSnackBarSelectedFiltersAction() {
+export const setSnackBarSelectedFiltersAction = () =>{
   return (dispatch, getState) => {
     const { selectedFilter, activeTrees } = getState().app;
     const newActiveTrees = {...activeTrees};
@@ -166,5 +212,29 @@ export function setSnackBarSelectedFiltersAction() {
         }
       })
     }
+  }
+}
+
+
+
+export const getSubheaderPageData = (selectedFilter) => {
+  return (dispatch, getState) => {
+    const TITLE_OBJ = {
+      assortment:  getSubheaderAssortmentData(selectedFilter),
+      report:  getSubheaderReportData(selectedFilter),
+      price:  getSubheaderPriceData(selectedFilter),
+      promotion:  getSubheaderPromotionData(selectedFilter),
+      ean: getSubheaderEANData(selectedFilter),
+      product:  getSubheaderProductData(selectedFilter),
+      view:  getSubheaderViewabilityData(selectedFilter),
+      media: getSubheaderMediaData(selectedFilter),
+      rating:  getSubheaderRatingData(selectedFilter),
+      geolocation:  getSubheaderGeolocationData(selectedFilter),
+      sales: getSubheaderSaleData(selectedFilter),
+      home: getSubheaderHomeData(selectedFilter),
+      gallerie: getSubheaderGallerieData(selectedFilter),
+    } 
+    const titleKey =  getState().app.pageTitleKey
+    dispatch(TITLE_OBJ[titleKey])
   }
 }

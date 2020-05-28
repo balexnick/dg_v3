@@ -37,6 +37,7 @@ const Layout = (props) => {
     selectedFilter,
     changeCalendarRange,
     changeCalendarRange2,
+    setPageTitleKey
   } = props
   const [title, setTitle] = useState('')
 
@@ -47,13 +48,17 @@ const Layout = (props) => {
   const HEADERTITLE = PAGENAME ? PAGENAME : title
   
   useEffect(() => {
-    if(pathname === '/') setTitle('Dashboard')
+    if(pathname === '/'){
+      setTitle('Dashboard')
+      setPageTitleKey('home')
+    }
     Object.keys(TITLE_OBJ).forEach(item => {
       if(pathname.includes(item)){
+        setPageTitleKey(item)
         setTitle(TITLE_OBJ[item])
       }
     })
-  },[pathname, TRANSLATES])
+  },[pathname, TRANSLATES, setPageTitleKey])
   
   useEffect(() => {
     getFiltersAndCategoriesAction()
@@ -74,6 +79,7 @@ const Layout = (props) => {
       />
       <Subheader
         translates={TRANSLATES}
+        title={title}
         {...props}
       />
       <DatagramMenu menu={TRANSLATES.menu} profile={profile} open={menuOpened} toogleOpen={() => toggleMenu(!menuOpened)}/>
@@ -102,7 +108,10 @@ const mapDispatchToProps = dispatch => ({
   changeCalendarRange: (data) => dispatch(actions.app.changeCalendarRange(data)),
   changeCalendarRange2: (data) => dispatch(actions.app.changeCalendarRange2(data)),
   selectFilter: (newSelectedFilter) => dispatch(actions.app.selectFilter(newSelectedFilter)),
-  setActiveTrees: (activeTrees) => dispatch(actions.app.setActiveTrees(activeTrees))
+  setActiveTrees: (activeTrees) => dispatch(actions.app.setActiveTrees(activeTrees)),
+  getSubheaderPageData: (title, selectedFilter) => dispatch(actions.app.getSubheaderPageData(title, selectedFilter)),
+  setRequestId: (data) => dispatch(actions.app.setRequestId(data)),
+  setPageTitleKey: (data) => dispatch(actions.app.setPageTitleKey(data))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))

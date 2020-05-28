@@ -152,15 +152,14 @@ const Subheader = (props) => {
     setCheckedAllButton(checkedAllButton)
     setFilterChanged(true)
   }
-
   const submitFilter = () => {
+    const {setRequestId, getSubheaderPageData} = props
+    localStorage.setItem('selected-filters', JSON.stringify(selectedFilter));
     let id = props.location.pathname.split('/').pop()
-    console.log('props', id)
-    // console.log(selectedFilter)
-    console.log('submit')
+    setRequestId(id)
+    getSubheaderPageData(selectedFilter)
   }
 
-  // console.log(props)
   return (
     <div className='dg-subheader' style={{ paddingLeft: menuOpened ? 220 : 70 }}>
       <RenderSubheaderElements 
