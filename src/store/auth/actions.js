@@ -1,10 +1,10 @@
-import * as conatant from './actionTypes'
+import * as constant from './actionTypes'
 import API from 'utils/API'
 import {browserHistory} from 'index'
 
 export const loginAction = (requestId, username, password) => {
   return (dispatch) => {
-    dispatch({type: conatant.LOGIN_REQUEST})
+    dispatch({type: constant.LOGIN_REQUEST})
     return API({
       url: `/login`,
       method: 'POST',
@@ -13,15 +13,21 @@ export const loginAction = (requestId, username, password) => {
       useToken: false,
     })
     .then(data => dispatch(loginSuccess(data)))
-    .catch(err =>  dispatch({type: conatant.LOGIN_FAILURE, payload: err }))
+    .catch(err =>  dispatch({type: constant.LOGIN_FAILURE, payload: err }))
   }
 }
 
 export function loginSuccess (data) {
-  localStorage.setItem('datagramToken', data.token)
   browserHistory.push('/')
+  localStorage.setItem('datagramToken', data.token)
   return {
-    type    : conatant.LOGIN_SUCCESS,
+    type    : constant.LOGIN_SUCCESS,
     payload : data.token
+  }
+}
+
+export const removeToken = () => {
+  return{
+    type    : constant.REMOVE_TOKEN,
   }
 }

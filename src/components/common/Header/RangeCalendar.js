@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import Event from '@material-ui/icons/Event'
 import moment from 'moment'
 import {getTranslates} from 'utils/getTranslate'
-// import { allStaticRanges, allInputRanges } from './DateRangePickerFunctions'
+import { allStaticRanges, allInputRanges } from './DateRangePickerFunctions'
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { actions } from 'store';
@@ -33,19 +33,24 @@ const RangeCalendar = (props) => {
   } = props
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [rangeDate, setRangeDate] = useState({startDate, endDate})
+  // const [rangeDate, setRangeDate] = useState({startDate: startDate, endDate: endDate})
+
+  const [start, setStart] = useState(startDate)
+  const [end, setEnd] = useState(endDate)
   const TRANSLATE = getTranslates(locale)
 
   const handleClose = () => {
     setModalVisible(false)
-    setRangeDate({startDate, endDate})
+    setStart(startDate)
+    setEnd(endDate)
+    // setRangeDate({startDate, endDate})
   }
   const handleValidate = () => {
     cancelRequests();
     setModalVisible(false)
     changeCalendarRange({
-      start: rangeDate.startDate,
-      end: rangeDate.endDate
+      start: start,
+      end: end
     });
     setSnackBarSelectedFiltersAction();
     setDeletedFiltersIds([]);
@@ -60,9 +65,11 @@ const RangeCalendar = (props) => {
   }
 
   const handleDateSelect = ({ selection }) => {
-    setRangeDate({ startDate: selection.startDate, endDate: selection.endDate })
+    // setRangeDate({ startDate: selection.startDate, endDate: selection.endDate })
+    setStart(selection.startDate)
+    setEnd(selection.endDate)
   }
-  const formatDate = () => `${moment(rangeDate.startDate).format('D MMM YYYY') + ' -> ' + moment(rangeDate.endDate).format('D MMM YYYY')}`
+  const formatDate = () => `${moment(start).format('D MMM YYYY') + ' -> ' + moment(end).format('D MMM YYYY')}`
   
   const calendarLocale = getCalendarLocale();
   
@@ -72,7 +79,7 @@ const RangeCalendar = (props) => {
         <Event />
         <Badge
           className='header-badgex-style'
-          badgeContent={moment(rangeDate.endDate).diff(moment(rangeDate.startDate), 'days') + 1 + ' ' + TRANSLATE.header.calendar.day}
+          badgeContent={moment(end).diff(moment(start), 'days') + 1 + ' ' + TRANSLATE.header.calendar.day}
         >
           <p>{formatDate()}</p>
         </Badge>
@@ -89,12 +96,12 @@ const RangeCalendar = (props) => {
           maxDate={new Date()}
           minDate={freemium ? new Date(moment().subtract(7, 'days')) : new Date(0)}
           ranges={[{
-            startDate: moment(rangeDate.startDate)._d,
-            endDate: moment(rangeDate.endDate)._d,
+            startDate: moment(start)._d,
+            endDate: moment(end)._d,
             key: 'selection'
           }]}
-          // staticRanges={allStaticRanges(locale)}
-          // inputRanges={allInputRanges(locale)}
+          staticRanges={allStaticRanges(locale)}
+          inputRanges={allInputRanges(locale)}
           onChange={handleDateSelect} 
         />
         <div id='calendar-custom-footer'>

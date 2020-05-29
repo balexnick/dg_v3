@@ -34,7 +34,7 @@ const initialState = {
   menuOpened: true,
   filters: {},
   extraFilters: [],
-  data: [],
+  contextualFilterData: [],
   selectedFilter: getInitialSelectedFilters(),
   snackBarFilters: [],
   activeTrees: {},
@@ -42,6 +42,16 @@ const initialState = {
   error: null,
   loadingDefaultFilters: false,
   defaultFiltersSet: false,
+  requestID: null,
+  alertsModal: {},
+  pageTitleKey: null,
+  isOpenSaveFiltersModal: false,
+  selectedFiltersExistence: false,
+  isOpenGroupFiltersModal: false,
+  isShowSubheaderSnackbar: false,
+  subheaderSnackbarMessage: '',
+  isLoadGroupFiltersList: false,
+  groupFiltersList: [],
 }
 
 export default (state = initialState, action) => {
@@ -99,7 +109,7 @@ export default (state = initialState, action) => {
     }
 
     case constant.CONTEXTUAL_FILTER_DATA: {
-      return ({ ...state, data: action.payload })
+      return ({ ...state, contextualFilterData: action.payload })
     }
 
     case constant.CHANGE_CALENDAR_RANGE: {
@@ -155,6 +165,102 @@ export default (state = initialState, action) => {
         deletedFiltersIds: action.payload,
       })
     }
+
+    case constant.SELECT_FILTERS: {
+      return ({ ...state, selectedFilter: { ...action.payload, requestDate: state.selectedFilter.requestDate } })
+    }
+
+    case constant.SET_ACTIVE_TREES: {
+      return ({
+        ...state,
+        activeTrees: action.payload,
+      })
+    }
+    
+    case constant.REQUEST_ID: {
+      return({
+        ...state,
+        requestID: action.payload
+      })
+    }
+
+    case constant.SET_NEW_ALERT_OPTIONS: {
+      const { data, type } = action.payload
+      const { alert_kpi = [], alert_cond = [], alert_freq = [], alert_options = [], export_route, export_component} = data
+      const newAlertData = {}
+      if (type) {
+        const alertFreqTrs = alert_freq.map((item) => { return { 'title' : item, 'name' : item } })
+        newAlertData[type] = {
+          alert_kpi: alert_kpi,
+          alert_cond: alert_cond,
+          alert_freq:alertFreqTrs,
+          alert_options: alert_options,
+          route: export_route,
+          component: export_component
+        }
+      }
+      return ({ ...state, alertsModal: { ...state.alertsModal, ...newAlertData } })
+    } 
+
+    case constant.SET_PAGE_TITLE_KEY: {
+      return ({
+        ...state,
+        pageTitleKey: action.payload,
+      })
+    }
+
+    case constant.TOGGLE_SAVE_FILTERS_MODAL:  {
+      return ({
+        ...state,
+        isOpenSaveFiltersModal: !state.isOpenSaveFiltersModal,
+      })
+    }
+
+    case constant.TOGGLE_SELECTED_FILTERS_EXISTENCE:{
+      return ({
+        ...state,
+        selectedFiltersExistence: action.payload
+      })
+    }
+
+    case constant.TOGGLE_GROUP_FILTERS_LIST_MODAL:{
+      return ({
+        ...state,
+        isOpenGroupFiltersModal: !state.isOpenGroupFiltersModal,
+      })
+    }
+
+    case constant.SHOW_SUBHEADER_SNACKBAR:  {
+      return ({
+        ...state,
+        isShowSubheaderSnackbar: true,
+        subheaderSnackbarMessage: action.payload,
+      })
+    }
+
+    case constant.HIDE_SUBHEADER_SNACKBAR: {
+      return ({
+        ...state,
+        isShowSubheaderSnackbar: false,
+        subheaderSnackbarMessage: '',
+      })
+    }
+
+    case constant.TOGGLE_LOAD_GROUP_FILTERS_LIST: {
+      return ({
+        ...state,
+        isLoadGroupFiltersList: !state.isLoadGroupFiltersList,
+      })
+    }
+
+    case constant.SET_GROUP_FILTERS_LIST:  {
+      return ({
+        ...state,
+        isLoadGroupFiltersList: false,
+        groupFiltersList: action.payload,
+      })
+    }
+
     default:
       return state
   }

@@ -65,8 +65,8 @@ export const allStaticRanges = (lang) => {
         }),
         isSelected(range) {
             const definedRange = this.range();
-            const isSameStartDay = range.startDate.isSame(moment(definedRange.startDate).format('YYYY-MM-DD'), 'day');
-            const isSameEndDay = range.endDate.isSame(moment(definedRange.endDate).format('YYYY-MM-DD'), 'day');
+            const isSameStartDay = moment(range.startDate).isSame(moment(definedRange.startDate).format('YYYY-MM-DD'), 'day');
+            const isSameEndDay = moment(range.endDate).isSame(moment(definedRange.endDate).format('YYYY-MM-DD'), 'day');
             return isSameStartDay && isSameEndDay;
         },
     }
@@ -79,8 +79,8 @@ export const allStaticRanges = (lang) => {
         }),
         isSelected(range) {
             const definedRange = this.range();
-            const isSameStartDay = range.startDate.isSame(moment(definedRange.startDate).format('YYYY-MM-DD'), 'day');
-            const isSameEndDay = range.endDate.isSame(moment(definedRange.endDate).format('YYYY-MM-DD'), 'day');
+            const isSameStartDay = moment(range.startDate).isSame(moment(definedRange.startDate).format('YYYY-MM-DD'), 'day');
+            const isSameEndDay = moment(range.endDate).isSame(moment(definedRange.endDate).format('YYYY-MM-DD'), 'day');
             return isSameStartDay && isSameEndDay;
         },
     }
