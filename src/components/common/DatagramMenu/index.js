@@ -25,8 +25,8 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import { Link } from "react-router-dom";
 import RouteLinks from './RouteLinks';
-import {browserHistory} from 'index'
-import './DatagramMenu.scss'
+
+import './DatagramMenu.scss';
 
 const styles = theme => ({
   drawerPaper: {
@@ -72,7 +72,7 @@ const styles = theme => ({
   }
 });
 
-const DatagramMenu = ({menu, profile, classes, toogleOpen, open}) => {
+const DatagramMenu = ({menu, profile, classes, toogleOpen, open, removeToken}) => {
   const [anchorElProfile, setAnchorElProfile] = useState(null)
   const [anchorElHelp, setAnchorElHelp] = useState(null)
 
@@ -108,7 +108,7 @@ const DatagramMenu = ({menu, profile, classes, toogleOpen, open}) => {
   const logout = () => {
     localStorage.removeItem("datagramToken");
     localStorage.removeItem("selected-filters");
-    browserHistory.push('/login')
+    removeToken()
   };
 
   const toggleAlertMenu = () => {

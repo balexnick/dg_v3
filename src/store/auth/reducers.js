@@ -17,6 +17,9 @@ export default (state = initialState, action) => {
     case constant.LOGIN_FAILURE:{
       return { ...state, fetching: false, error: true }
     }
+    case constant.REMOVE_TOKEN: {
+      return { ...state, token: null }
+    }
     default:
       return state
   }

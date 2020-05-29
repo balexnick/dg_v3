@@ -8,9 +8,9 @@ import {connect} from 'react-redux'
 import './Login.scss'
 import datagram from 'assets/datagram.png'
 import { actions } from 'store'
+import {Redirect} from 'react-router-dom'
 
-
-const Login = ({loginAction, isFetching, error}) => {
+const Login = ({loginAction, isFetching, error, token}) => {
   const [userInfo, setUserInfo] = useState({username: 'pascal@datagram.ai', password: 'Pscl%%17!!'})
 
   const submitLogin = () => {
@@ -23,7 +23,7 @@ const Login = ({loginAction, isFetching, error}) => {
       [e.target.name]: e.target.value
     });
   }
-
+  if(token) return <Redirect to='/'/>
   return (
     <div className='login-container'>
       <Toolbar className='custom-style-header'>
@@ -74,6 +74,7 @@ const Login = ({loginAction, isFetching, error}) => {
 const mapStateToProps = store => ({
   isFetching: store.auth.fetching,
   error: store.auth.error,
+  token: store.auth.token
 })
 
 const mapDispatchToProps = dispatch => ({

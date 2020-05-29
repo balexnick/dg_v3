@@ -1,9 +1,8 @@
 import React from 'react'
-import { Router } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { Switch } from "react-router";
 import {browserHistory} from 'index';
 import ProtectedRoute from './ProtectedRoute';
-
 
 import Login from 'pages/Login';
 import Assortment from 'pages/Assortment';
@@ -21,7 +20,8 @@ const Routes = () => {
   return (
     <Router history={browserHistory}>
       <Switch>
-        <ProtectedRoute path='/login' notauth component={Login} />
+        <ProtectedRoute path='/' exact component={Homepage} />
+        <Route path='/login' component={Login} />
         <ProtectedRoute path='/assortment' component={Assortment} />
         <ProtectedRoute path='/geolocation' component={Geolocation} />
         <ProtectedRoute path='/media' component={Media} />
@@ -31,7 +31,6 @@ const Routes = () => {
         <ProtectedRoute path='/rating' component={Rating} />
         <ProtectedRoute path='/sales' component={Sales} />
         <ProtectedRoute path='/viewability' component={Viewability} />
-        <ProtectedRoute path='/' component={Homepage} />
       </Switch>
     </Router>
   )

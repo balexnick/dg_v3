@@ -134,7 +134,6 @@ export function changeFChartManufacturerGroupAction (value) {
 }
 
 export const getMediaChartAction = (requestId, filter) => {
-  // console.log('qqqq', requestId, filter)
   return async (dispatch, getState) => {
     dispatch(getChartDataRequest())
   
@@ -151,18 +150,14 @@ export const getMediaChartAction = (requestId, filter) => {
     if(filter && media && media.manufacturerGroup) {
       qs += '&manufacturer_group=' + media.manufacturerGroup;
     }
-    // console.log('qs', qs)
     return API({
       url: `/media/stax/${qs}`,
       requestId,
     })
     .then(data => {
-      console.log('response', data)
       dispatch(changeCalendarRangeFromRoute(data))
       dispatch(getChartDataSuccess(data))
-      console.log(data[0].data)
       if (data[0].data.stax.alert_kpi) {
-        console.log('qwe123')
         const newAlerts = { type: 'stax', data: data.stax }
         dispatch(setNewAlertOptions(newAlerts)) 
       }

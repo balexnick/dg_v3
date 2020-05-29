@@ -266,7 +266,6 @@ export const getViewChartFBAction = (requestId, filter) => {
       requestId,
     })
     .then(data => {
-      console.log(data)
       dispatch(changeCalendarRangeFromRoute(data))
       dispatch(getChartFBSuccess(data))
     })

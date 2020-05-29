@@ -18,10 +18,16 @@ export const loginAction = (requestId, username, password) => {
 }
 
 export function loginSuccess (data) {
-  localStorage.setItem('datagramToken', data.token)
   browserHistory.push('/')
+  localStorage.setItem('datagramToken', data.token)
   return {
     type    : constant.LOGIN_SUCCESS,
     payload : data.token
+  }
+}
+
+export const removeToken = () => {
+  return{
+    type    : constant.REMOVE_TOKEN,
   }
 }

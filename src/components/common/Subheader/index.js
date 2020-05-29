@@ -208,7 +208,6 @@ const Subheader = (props) => {
 
   const handleSelectedFilterClick = (item) => {
     const { deletedFiltersIds } = props;
-    console.log(props)
     if(!selectedFilter.extra.find(elem => elem.id === item.id)) {
       selectedFilter.extra.push({
         id: item.id,
@@ -246,7 +245,6 @@ const Subheader = (props) => {
   const renderSelectedFilters = (filters) => {
 
     const { location, toggleSelectedFiltersExistence, deletedFiltersIds } = props;
-    // console.log(props)
     const selectedFilters = []
     if (filters && filters.length > 0) {
       
@@ -370,7 +368,8 @@ const Subheader = (props) => {
         message={subheaderSnackbarMessage}
       />
 
-      <GroupFiltersListModal
+      {
+        isOpenGroupFiltersModal && (<GroupFiltersListModal
         getGroupFiltersList={getGroupFiltersList}
         isOpenGroupFiltersModal={isOpenGroupFiltersModal}
         toggleGroupFiltersListModal={toggleGroupFiltersListModal}
@@ -379,7 +378,9 @@ const Subheader = (props) => {
         setGroupFilters={setGroupFilters}
         submitFilter={submitFilter}
         deleteGroupFilter={deleteGroupFilter}
-      />
+      />)
+      }
+      
     </div>
 
   )

@@ -13,12 +13,23 @@ import { cancelRequests } from 'utils/API';
 const styles = theme => ({
   fab: {
     margin: theme.spacing(1),
-    position: 'absolute',
+    position: 'fixed',
     right: 0,
     width: 75,
     height: 75,
     marginTop: 50,
+    zIndex: '11'
   },  
+
+  subDoughter:{
+    margin: '90px 50px 0 0',
+    padding: '15px 15px 65px 15px', 
+    background: '#fff', 
+    borderRadius: '6px',
+    position: 'fixed',
+    right: '0',
+    zIndex: '-1'
+  }
 });
 
 class ContextualFilter extends Component {
@@ -28,8 +39,7 @@ class ContextualFilter extends Component {
     isCheckedSecond: false
   }
 
-  componentWillMount() {
-    console.log(this.props)
+  componentDidMount() {
     let data = this.props.contextualFilterData
 
     if(this.props.contextualFilterData.length > 0) {
@@ -257,7 +267,7 @@ class ContextualFilter extends Component {
         </Fab>
 
         {isOpen && (
-          <div className='sub' style={{ margin: '90px 50px 0 0', padding: '15px 15px 65px 15px', background: '#fff', borderRadius: '6px' }}>
+          <div className={`sub ${classes.subDoughter}`}>
             <div style={{ maxHeight: 300, overflowY: 'auto' }}>
               <div>
                 {this.renderOptions()}

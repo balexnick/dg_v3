@@ -38,7 +38,8 @@ const Layout = (props) => {
     selectedFilter,
     changeCalendarRange,
     changeCalendarRange2,
-    setPageTitleKey
+    setPageTitleKey,
+    removeToken
   } = props
   const [title, setTitle] = useState('')
 
@@ -83,7 +84,7 @@ const Layout = (props) => {
         title={title}
         {...props}
       />
-      <DatagramMenu menu={TRANSLATES.menu} profile={profile} open={menuOpened} toogleOpen={() => toggleMenu(!menuOpened)}/>
+      <DatagramMenu removeToken={removeToken} menu={TRANSLATES.menu} profile={profile} open={menuOpened} toogleOpen={() => toggleMenu(!menuOpened)}/>
 
       <div className='core-layout__viewport' style={{ paddingLeft: menuOpened ? 220 : 70 }}> 
         <div className='sub-container'>
@@ -115,6 +116,7 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  removeToken: () => dispatch(actions.auth.removeToken()),
   getProfileAction: () => dispatch(actions.app.getProfileAction()),
   getFiltersAndCategoriesAction: () => dispatch(actions.app.getFiltersAndCategoriesAction()),
   getContextualFilterAction: () => dispatch(actions.app.getContextualFilterAction()),
