@@ -63,10 +63,10 @@ export const changeResponseCalendarRange = (date) => {
   }
 }
 
-export const setDeletedFiltersIds = (deletedFiltersIds) => {
+export const setDeletedFiltersIds = (data) => {
   return {
     type: constant.SET_DELETED_FILTERS_IDS,
-    payload: deletedFiltersIds,
+    payload: data,
   }
 }
 
@@ -119,6 +119,39 @@ export const setPageTitleKey = data => {
   }
 }
 
+
+export const toggleSaveFiltersModal = () => {
+  return {
+    type    : constant.TOGGLE_SAVE_FILTERS_MODAL,
+  }
+}
+
+
+export const toggleSelectedFiltersExistence =  (existence) => {
+  return {
+    type    : constant.TOGGLE_SELECTED_FILTERS_EXISTENCE,
+    payload : existence
+  }
+}
+
+export const toggleGroupFiltersListModal = () => {
+  return {
+    type    : constant.TOGGLE_GROUP_FILTERS_LIST_MODAL,  
+  }
+}
+
+export function showSubheaderSnackbar(message) {
+  return {
+    type    : constant.SHOW_SUBHEADER_SNACKBAR,
+    payload : message,
+  }
+}
+
+export function hideSubheaderSnackbar() {
+  return {
+    type    : constant.HIDE_SUBHEADER_SNACKBAR,
+  }
+}
 // ------------------------------------
 // Specialized Action Creator
 // ------------------------------------
@@ -138,6 +171,29 @@ export const toggleMenu = (opened) => {
     dispatch({type: constant.TOGGLE_MENU, payload: opened})
   }
 }
+
+export const getSubheaderPageData = (selectedFilter) => {
+  return (dispatch, getState) => {
+    const TITLE_OBJ = {
+      assortment:  getSubheaderAssortmentData(selectedFilter),
+      report:  getSubheaderReportData(selectedFilter),
+      price:  getSubheaderPriceData(selectedFilter),
+      promotion:  getSubheaderPromotionData(selectedFilter),
+      ean: getSubheaderEANData(selectedFilter),
+      product:  getSubheaderProductData(selectedFilter),
+      view:  getSubheaderViewabilityData(selectedFilter),
+      media: getSubheaderMediaData(selectedFilter),
+      rating:  getSubheaderRatingData(selectedFilter),
+      geolocation:  getSubheaderGeolocationData(selectedFilter),
+      sales: getSubheaderSaleData(selectedFilter),
+      home: getSubheaderHomeData(selectedFilter),
+      gallerie: getSubheaderGallerieData(selectedFilter),
+    } 
+    const titleKey =  getState().app.pageTitleKey
+    dispatch(TITLE_OBJ[titleKey])
+  }
+}
+
 
 export const getFiltersAndCategoriesAction = () => {
   return (dispatch, getState) => {
@@ -215,26 +271,96 @@ export const setSnackBarSelectedFiltersAction = () =>{
   }
 }
 
+export function saveDefaultGroupFilters ({ defaultFiltersGroup, nameGroupFilters }) {
+
+  return (dispatch) => { // because now it is redux action - need refactor
+    const payload = {};
+    payload.filter_name = nameGroupFilters;
+
+    // Format filters for api 
+    const formattedFilters = [];
+    defaultFiltersGroup.extra.forEach(elem => {
+      if(!payload[elem.key]) {
+        payload[elem.key] = [];
+        formattedFilters.push(elem.key);
+      }
+      payload[elem.key].push(elem.id);
+    })
+
+    formattedFilters.forEach(key => {
+      payload[key] = payload[key].join("|");
+    })
+
+    return API({
+      url: `/filters`,
+      method: 'POST',
+      data: payload,
+    })
+    .then(res => {
+      dispatch(showSubheaderSnackbar(`${res.success}`));
+      dispatch(toggleSaveFiltersModal());
+    })
+    .catch(err => {
+      dispatch(showSubheaderSnackbar('Filter group not saved'));
+      dispatch(toggleSaveFiltersModal());
+    })
+  }
+}
+
+export function getGroupFiltersList() {
+  return (dispatch) => {
+    dispatch({ type: constant.TOGGLE_LOAD_GROUP_FILTERS_LIST });
+
+    return API({
+      url: '/filters/list',
+    })
+    .then(res => {
+      dispatch({ type: constant.SET_GROUP_FILTERS_LIST, payload: res });
+    })
+    .catch(err => {
+      dispatch({ type: constant.TOGGLE_LOAD_GROUP_FILTERS_LIST });
+      dispatch(toggleGroupFiltersListModal());
+      dispatch(showSubheaderSnackbar('Failted to get the list of filter groups'));
+    })
+  }
+}
 
 
-export const getSubheaderPageData = (selectedFilter) => {
+export function setGroupFilters(id, submitFilter) {
   return (dispatch, getState) => {
-    const TITLE_OBJ = {
-      assortment:  getSubheaderAssortmentData(selectedFilter),
-      report:  getSubheaderReportData(selectedFilter),
-      price:  getSubheaderPriceData(selectedFilter),
-      promotion:  getSubheaderPromotionData(selectedFilter),
-      ean: getSubheaderEANData(selectedFilter),
-      product:  getSubheaderProductData(selectedFilter),
-      view:  getSubheaderViewabilityData(selectedFilter),
-      media: getSubheaderMediaData(selectedFilter),
-      rating:  getSubheaderRatingData(selectedFilter),
-      geolocation:  getSubheaderGeolocationData(selectedFilter),
-      sales: getSubheaderSaleData(selectedFilter),
-      home: getSubheaderHomeData(selectedFilter),
-      gallerie: getSubheaderGallerieData(selectedFilter),
-    } 
-    const titleKey =  getState().app.pageTitleKey
-    dispatch(TITLE_OBJ[titleKey])
+    return API({
+      url: `/filters/load/?filter_id=${id}`
+    })
+    .then(res => {
+      const newSelectedFilters = getState().app.selectedFilter;
+      newSelectedFilters.extra = res;
+      dispatch(selectFilter(newSelectedFilters));
+      dispatch(toggleGroupFiltersListModal());
+    })
+    .then(() => {
+      submitFilter();
+    })
+    .catch(err => {
+      dispatch(toggleGroupFiltersListModal());
+      dispatch(showSubheaderSnackbar('Failted to set group of filters'));
+    })
+  }
+}
+
+export function deleteGroupFilter(id) {
+  return (dispatch) => {
+
+    return API({
+      url: `/filters/delete/?filter_id=${id}`,
+    })
+    .then(res => {
+      dispatch(showSubheaderSnackbar(res));
+      dispatch(getGroupFiltersList());
+    })
+    .catch(err => {
+      dispatch(toggleGroupFiltersListModal());
+      dispatch(showSubheaderSnackbar('Failted to delete group of filters'));
+    })
+
   }
 }

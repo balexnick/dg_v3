@@ -34,7 +34,7 @@ const RenderSubheaderElements = (props) => {
 
   const [open, setOpen] = useState([])
   const [anchorEl, setAnchorEl] = useState(null)
-  const [countSingleMenu, setCountSingleMenu] = useState(5)
+  const [countSingleMenu] = useState(5)
 
   const handleFilterModalOpen = (e, key) => {
     open[key] = !open[key];

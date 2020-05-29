@@ -44,7 +44,14 @@ const initialState = {
   defaultFiltersSet: false,
   requestID: null,
   alertsModal: {},
-  pageTitleKey: null
+  pageTitleKey: null,
+  isOpenSaveFiltersModal: false,
+  selectedFiltersExistence: false,
+  isOpenGroupFiltersModal: false,
+  isShowSubheaderSnackbar: false,
+  subheaderSnackbarMessage: '',
+  isLoadGroupFiltersList: false,
+  groupFiltersList: [],
 }
 
 export default (state = initialState, action) => {
@@ -199,6 +206,58 @@ export default (state = initialState, action) => {
       return ({
         ...state,
         pageTitleKey: action.payload,
+      })
+    }
+
+    case constant.TOGGLE_SAVE_FILTERS_MODAL:  {
+      return ({
+        ...state,
+        isOpenSaveFiltersModal: !state.isOpenSaveFiltersModal,
+      })
+    }
+
+    case constant.TOGGLE_SELECTED_FILTERS_EXISTENCE:{
+      return ({
+        ...state,
+        selectedFiltersExistence: action.payload
+      })
+    }
+
+    case constant.TOGGLE_GROUP_FILTERS_LIST_MODAL:{
+      return ({
+        ...state,
+        isOpenGroupFiltersModal: !state.isOpenGroupFiltersModal,
+      })
+    }
+
+    case constant.SHOW_SUBHEADER_SNACKBAR:  {
+      return ({
+        ...state,
+        isShowSubheaderSnackbar: true,
+        subheaderSnackbarMessage: action.payload,
+      })
+    }
+
+    case constant.HIDE_SUBHEADER_SNACKBAR: {
+      return ({
+        ...state,
+        isShowSubheaderSnackbar: false,
+        subheaderSnackbarMessage: '',
+      })
+    }
+
+    case constant.TOGGLE_LOAD_GROUP_FILTERS_LIST: {
+      return ({
+        ...state,
+        isLoadGroupFiltersList: !state.isLoadGroupFiltersList,
+      })
+    }
+
+    case constant.SET_GROUP_FILTERS_LIST:  {
+      return ({
+        ...state,
+        isLoadGroupFiltersList: false,
+        groupFiltersList: action.payload,
       })
     }
 

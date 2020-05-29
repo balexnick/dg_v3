@@ -6,6 +6,7 @@ import DatagramMenu from 'components/common/DatagramMenu'
 import Subheader from 'components/common/Subheader';
 import { actions } from 'store'
 import {getTranslates} from 'utils/getTranslate'
+import ContextualFilter from 'components/common/ContextualFilter'
 import './layout.scss'
 
 const TITLE_OBJ = {
@@ -86,6 +87,7 @@ const Layout = (props) => {
 
       <div className='core-layout__viewport' style={{ paddingLeft: menuOpened ? 220 : 70 }}> 
         <div className='sub-container'>
+          <ContextualFilter translates={TRANSLATES} {...props} />
           {children}
         </div>
       </div>
@@ -97,7 +99,19 @@ const Layout = (props) => {
 const mapStateToProps = store => ({
   profile: store.app.profile,
   menuOpened: store.app.menuOpened,
-  selectedFilter: store.app.selectedFilter
+  selectedFilter: store.app.selectedFilter,
+  snackBarFilters: store.app.snackBarFilters,
+  deletedFiltersIds: store.app.deletedFiltersIds,
+  extraFilters : store.app.extraFilters,
+  activeTrees: store.app.activeTrees,
+  isOpenSaveFiltersModal: store.app.isOpenSaveFiltersModal,
+  isShowSubheaderSnackbar: store.app.isShowSubheaderSnackbar,
+  subheaderSnackbarMessage: store.app.subheaderSnackbarMessage,
+  isOpenGroupFiltersModal: store.app.isOpenGroupFiltersModal,
+  groupFiltersList: store.app.groupFiltersList,
+  isLoadGroupFiltersList: store.app.isLoadGroupFiltersList,
+  contextualFilterData: store.app.contextualFilterData,
+  fetching: store.app.fetching
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -111,7 +125,18 @@ const mapDispatchToProps = dispatch => ({
   setActiveTrees: (activeTrees) => dispatch(actions.app.setActiveTrees(activeTrees)),
   getSubheaderPageData: (title, selectedFilter) => dispatch(actions.app.getSubheaderPageData(title, selectedFilter)),
   setRequestId: (data) => dispatch(actions.app.setRequestId(data)),
-  setPageTitleKey: (data) => dispatch(actions.app.setPageTitleKey(data))
+  setPageTitleKey: (data) => dispatch(actions.app.setPageTitleKey(data)),
+  toggleSaveFiltersModal: () => dispatch(actions.app.toggleSaveFiltersModal()),
+  toggleSelectedFiltersExistence: () => dispatch(actions.app.toggleSelectedFiltersExistence()),
+  setSnackBarSelectedFiltersAction: () => dispatch(actions.app.setSnackBarSelectedFiltersAction()),
+  setDeletedFiltersIds: (deletedFiltersIds) => dispatch(actions.app.setDeletedFiltersIds(deletedFiltersIds)),
+  saveDefaultGroupFilters: (data) => dispatch(actions.app.saveDefaultGroupFilters(data)),
+  hideSubheaderSnackbar: () => dispatch(actions.app.hideSubheaderSnackbar()),
+  getGroupFiltersList: () => dispatch(actions.app.getGroupFiltersList()),
+  setGroupFilters: (id, submitFilter) => dispatch(actions.app.setGroupFilters(id, submitFilter)),
+  deleteGroupFilter: (id) => dispatch(actions.app.deleteGroupFilter(id)),
+  toggleGroupFiltersListModal: () => dispatch(actions.app.toggleGroupFiltersListModal()),
+  setContextualFilterData: (data) => dispatch(actions.app.setContextualFilterData(data))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))
